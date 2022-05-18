@@ -1,0 +1,16 @@
+<div (click)="openLink()" class="crescer-componente">
+  <mat-card class="card-nota">
+    <mat-card-title>{{doc?.nome}}</mat-card-title>
+    <mat-card-content>
+      <div fxLayout="row" fxLayoutAlign="center">
+        <mat-icon class="icone-card" fxFlexAlign="center">{{getIcone()}}</mat-icon>
+      </div>
+    </mat-card-content>
+    <mat-divider inset></mat-divider>
+    <mat-card-actions align="end">
+      <mat-chip-list>
+        <mat-chip *ngFor="let tag of doc?.tags">{{ tag }}</mat-chip>
+      </mat-chip-list>
+    </mat-card-actions>
+  </mat-card>
+</div>

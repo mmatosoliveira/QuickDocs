@@ -1,0 +1,4 @@
+{
+  "urlApi": "http://localhost:30996/api/",
+  "redirectHttps": false
+}

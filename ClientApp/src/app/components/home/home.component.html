@@ -1,0 +1,7 @@
+<div [class.dark-theme]="isDark">
+  <app-toolbar (onToggleTheme)="isDark = $event; controlOverlayContainer()"
+    (toggleSidenav)="toggleSidenav()"
+    (onCloseDocsSettings)="sidenav.processarDados()"></app-toolbar>
+  <app-sidenav #sidenav>
+  </app-sidenav>
+</div>

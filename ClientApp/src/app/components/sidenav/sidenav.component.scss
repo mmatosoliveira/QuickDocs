@@ -1,0 +1,35 @@
+// src\app\shared\components\sidenav\sidenav.component.scss
+
+.example-container {
+  height: calc(100vh - 64px);
+  .mat-sidenav {
+    padding: 8px;
+    min-width: 300px;
+    max-width: 300px;
+  }
+  .mat-sidenav-content {
+    height: calc(100vh - 64px);
+  }
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-icon-no-color {
+  color: rbga(0, 0, 0, 0.54);
+}
+
+.titulo-categorias{
+  font-size: 20px;
+  text-align: center;
+}
+
+.container {
+  padding: 8px;
+}
+
+.descricao-categoria{
+  overflow-wrap: break-word;
+  margin: 10px;
+}

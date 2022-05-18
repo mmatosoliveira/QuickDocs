@@ -1,0 +1,45 @@
+<h2 *ngIf="data.id; else tituloAdicionar">Editar</h2>
+<ng-template #tituloAdicionar>
+  <h2>Adicionar</h2>
+</ng-template>
+<div fxLayout="row wrap" fxLayoutAlign="space-around stretch">
+  <mat-form-field fxFlex="45" appearance="fill">
+    <mat-label>Categoria</mat-label>
+    <input matInput type="text" [matAutocomplete]="auto" [(ngModel)]="data.categoria">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let categoria of categorias" [value]="categoria">
+        {{categoria}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field fxFlex="45" appearance="fill">
+    <mat-label>Nome</mat-label>
+    <input matInput type="text" [(ngModel)]="data.nome">
+  </mat-form-field>
+  <mat-form-field fxFlex="45" appearance="fill">
+    <mat-label>Link</mat-label>
+    <input matInput type="text" [(ngModel)]="data.link">
+  </mat-form-field>
+  <mat-form-field fxFlex="45" appearance="fill">
+    <mat-label>Icone</mat-label>
+    <input matInput type="text" [(ngModel)]="data.icone">
+  </mat-form-field>
+  <mat-form-field fxFlex="100">
+    <mat-label >Tags</mat-label>
+    <mat-chip-list #chipList multiple >
+      <mat-chip *ngFor="let tag of data?.tags" (removed)="remove(tag)">
+        {{ tag }}
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+      <input
+      placeholder="Nova tag"
+      [matChipInputFor]="chipList"
+      (matChipInputTokenEnd)="addKeywordFromInput($event)">
+    </mat-chip-list>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button cdkFocusInitial (click)="salvarDados()">Salvar</button>
+</div>
