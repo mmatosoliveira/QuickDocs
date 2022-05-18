@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { take } from 'rxjs';
 import { ItemDoc } from 'src/app/models/item-doc.model';
 import { BuscadorItensDocsService } from 'src/app/services/buscador-itens-docs.service';
+import { StringHelper } from 'src/app/shared/string-helper';
 
 @Component({
   selector: 'app-doc-form',
@@ -12,6 +13,7 @@ import { BuscadorItensDocsService } from 'src/app/services/buscador-itens-docs.s
 })
 export class DocFormComponent implements OnInit {
   categorias : string[] = [];
+  categoriasFiltradas : string[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<DocFormComponent>,
@@ -27,7 +29,10 @@ export class DocFormComponent implements OnInit {
   consultarCategorias(){
     this.buscador.obterTodasCategorias()
       .pipe(take(1))
-      .subscribe(d => this.categorias = d);
+      .subscribe(d => {
+        this.categorias = d;
+        this.categoriasFiltradas = d;
+      });
   }
 
   addKeywordFromInput(event: MatChipInputEvent) {
@@ -51,5 +56,11 @@ export class DocFormComponent implements OnInit {
     this.buscador.salvarDoc(this.data)
       .pipe(take(1))
       .subscribe(x => this.dialogRef.close());
+  }
+
+  filtrarCategorias(value : KeyboardEvent){
+    let valor = StringHelper.removerAcentos((value?.target as HTMLInputElement)?.value ?? '');
+    this.categoriasFiltradas = this.categorias
+      .filter(x => x.toLowerCase().includes(valor.toLowerCase()));
   }
 }

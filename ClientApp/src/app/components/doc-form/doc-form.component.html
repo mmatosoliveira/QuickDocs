@@ -5,9 +5,9 @@
 <div fxLayout="row wrap" fxLayoutAlign="space-around stretch">
   <mat-form-field fxFlex="45" appearance="fill">
     <mat-label>Categoria</mat-label>
-    <input matInput type="text" [matAutocomplete]="auto" [(ngModel)]="data.categoria">
+    <input matInput type="text" [matAutocomplete]="auto" [(ngModel)]="data.categoria" (keyup)="filtrarCategorias($event)">
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let categoria of categorias" [value]="categoria">
+      <mat-option *ngFor="let categoria of categoriasFiltradas" [value]="categoria">
         {{categoria}}
       </mat-option>
     </mat-autocomplete>

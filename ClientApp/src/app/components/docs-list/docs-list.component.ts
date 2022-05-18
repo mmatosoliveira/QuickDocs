@@ -53,7 +53,6 @@ export class DocsListComponent implements OnInit {
   abrirForm(itemDoc : ItemDoc | null = null){
     const dialogRef = this.dialog.open(DocFormComponent, {
       width: '70%',
-      height: '65%',
       data: itemDoc ?? {} as ItemDoc
     });
 
