@@ -9,6 +9,9 @@ import { ItemDoc } from 'src/app/models/item-doc.model';
 export class CardItemDocComponent implements OnInit {
 
   @Input()
+  searchedValue : string = '';
+
+  @Input()
   doc : ItemDoc | null = null;
 
   constructor() { }

@@ -9,7 +9,7 @@ import { SidenavComponent } from '../sidenav/sidenav.component';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  searchedValue : string = '';
   isDark: boolean = true;
   @ViewChild('sidenav') sidenav!: SidenavComponent;
 

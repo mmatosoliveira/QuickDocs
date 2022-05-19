@@ -1,8 +1,8 @@
-import { DocsListComponent } from './../docs-list/docs-list.component';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
-import { OverlayContainer } from '@angular/cdk/overlay';
+
+import { DocsListComponent } from './../docs-list/docs-list.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -14,6 +14,8 @@ export class ToolbarComponent implements OnInit {
   isDark : boolean = false;
   themeColor: 'primary' | 'accent' | 'warn' = 'primary';
   isOpened : boolean = true;
+  showSearchInput : boolean = false;
+  searchedValue : string = '';
 
   @Output()
   toggleSidenav : EventEmitter<boolean> = new EventEmitter();
@@ -23,6 +25,9 @@ export class ToolbarComponent implements OnInit {
 
   @Output()
   onCloseDocsSettings : EventEmitter<any> = new EventEmitter();
+
+  @Output()
+  onSearch : EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     private localStorage : LocalStorageService,

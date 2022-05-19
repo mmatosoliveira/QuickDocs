@@ -1,24 +1,26 @@
 <mat-toolbar [color]="themeColor">
-  <button
-    mat-icon-button
-    class="example-icon"
-    matTooltip="Abrir ou recolher o menu lateral"
-    aria-label="Abrir ou recolher o menu lateral"
-    (click)="isOpened = !isOpened; toggleSidenav.emit(isOpened)"
-  >
-    <mat-icon *ngIf="!isOpened">menu</mat-icon>
-    <mat-icon *ngIf="isOpened">close</mat-icon>
-  </button>
-  <span>Quick Docs</span>
-  <span class="example-spacer"></span>
-  <button
-    mat-icon-button
-    (click)="toggleTheme()"
-    matTooltip="Escolher entre tema dark ou light"
-  >
-    <mat-icon>brightness_6</mat-icon>
-  </button>
-  <button mat-button matTooltip="Gerenciar docs" (click)="abrirDialogListaDocs()">
-    <mat-icon>settings</mat-icon>
-  </button>
+  <div fxLayout="row" fxLayoutAlign="space-between stretch" style="width: 100%;">
+    <div fxFlex="80" fxLayout="row" fxLayoutAlign="start stretch">
+      <button fxFlexAlign="center" mat-icon-button class="example-icon" matTooltip="Abrir ou recolher o menu lateral"
+        aria-label="Abrir ou recolher o menu lateral" (click)="isOpened = !isOpened; toggleSidenav.emit(isOpened)">
+        <mat-icon *ngIf="!isOpened">menu</mat-icon>
+        <mat-icon *ngIf="isOpened">close</mat-icon>
+      </button>
+      <span fxFlexAlign="center">Quick Docs</span>
+      <mat-form-field appearance="standard" *ngIf="showSearchInput" style="margin-left: 25px;" fxFlexAlign="center" fxFlex>
+        <input type="text" (keyup.enter)="onSearch.emit(searchedValue)" [(ngModel)]="searchedValue" matInput placeholder="Pesquisar por categoria, nome ou tags" style="height: 30px;" #filter/>
+      </mat-form-field>
+      <button mat-icon-button (click)="showSearchInput = !showSearchInput;" fxFlexAlign="center">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+    <div fxFlex="20" fxLayout="row" fxLayoutAlign="end stretch">
+      <button fxFlexAlign="center" mat-icon-button (click)="toggleTheme()" matTooltip="Escolher entre tema dark ou light">
+        <mat-icon>brightness_6</mat-icon>
+      </button>
+      <button fxFlexAlign="center" mat-icon-button matTooltip="Gerenciar docs" (click)="abrirDialogListaDocs()">
+        <mat-icon>settings</mat-icon>
+      </button>
+    </div>
+  </div>
 </mat-toolbar>

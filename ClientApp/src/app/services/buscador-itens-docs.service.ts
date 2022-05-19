@@ -14,8 +14,13 @@ export class BuscadorItensDocsService {
     private configService : ConfigService
   ) { }
 
-  obterDadosDocs() : Observable<ItemDoc[]>{
-    return this.client.get<ItemDoc[]>(this.configService.urlApi + "QuickDoc/ObterDocs");
+  obterDadosDocs(query : string | null = null) : Observable<ItemDoc[]>{
+    let url = this.configService.urlApi + "QuickDoc/ObterDocs";
+
+    if(query)
+      url += `?query=${query}`;
+
+    return this.client.get<ItemDoc[]>(url);
   }
 
   obterTodasCategorias() : Observable<string[]>{

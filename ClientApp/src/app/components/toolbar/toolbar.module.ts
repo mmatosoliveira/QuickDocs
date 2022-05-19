@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { MaterialComponentsModule } from './../../shared/material-components.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,7 +12,8 @@ import { DocsListModule } from '../docs-list/docs-list.module';
   imports: [
     CommonModule,
     MaterialComponentsModule,
-    DocsListModule
+    DocsListModule,
+    FormsModule
   ],
   exports: [
     ToolbarComponent

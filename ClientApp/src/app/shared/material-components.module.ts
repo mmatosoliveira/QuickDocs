@@ -24,6 +24,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { TextHighlightDirective } from './text-highlight.directive';
 
 @NgModule({
   exports:[
@@ -53,7 +56,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTableModule,
     MatSelectModule,
     MatAutocompleteModule,
-    MatSortModule
+    MatSortModule,
+    TextHighlightDirective,
+    BrowserAnimationsModule
+  ],
+  declarations:[
+    TextHighlightDirective
   ]
 })
 export class MaterialComponentsModule { }

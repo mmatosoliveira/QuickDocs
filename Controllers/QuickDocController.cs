@@ -14,9 +14,9 @@ namespace QuickDocs.Controllers
         }
 
         [HttpGet]
-        public IActionResult ObterDocs()
+        public IActionResult ObterDocs(string query = null)
         {
-            return Ok(_manager.GetDocs());
+            return Ok(_manager.GetDocs(query));
         }
 
         [HttpPost]

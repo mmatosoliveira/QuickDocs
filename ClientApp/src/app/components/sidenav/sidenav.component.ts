@@ -1,5 +1,5 @@
 import { ItemDoc } from './../../models/item-doc.model';
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Observable, take } from 'rxjs';
 import { BuscadorItensDocsService } from 'src/app/services/buscador-itens-docs.service';
@@ -11,22 +11,30 @@ import { ItemDocPorCategoria } from 'src/app/models/item-doc-por-categoria.model
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent implements OnInit, OnChanges {
   isOpened: boolean = true;
   docsCategoriaSelecionada : ItemDoc[] = [];
   categoriasAgrupadas : ItemDocPorCategoria[] = [];
   categoriaSelecionada : string = '';
+
+  @Input()
+  searchedValue : string = '';
 
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
   constructor(private buscador: BuscadorItensDocsService) {}
 
   ngOnInit(): void {
-    this.processarDados();
+  }
+
+  ngOnChanges(changes: SimpleChanges):void{
+    if(changes['searchedValue']){
+      this.processarDados();
+    }
   }
 
   processarDados(){
-    this.buscador.obterDadosDocs()
+    this.buscador.obterDadosDocs(this.searchedValue)
     .pipe(take(1))
     .subscribe(dados => {
       this.categoriasAgrupadas = [];
@@ -36,6 +44,11 @@ export class SidenavComponent implements OnInit {
           categoria: item,
           itens: dadosAgrupados[item]
         } as ItemDocPorCategoria);
+      if(this.categoriasAgrupadas.length > 0){
+        let categoria = this.categoriasAgrupadas[0];
+        this.categoriaSelecionada = categoria?.categoria;
+        this.docsCategoriaSelecionada = categoria?.itens;
+      }
     });
   }
 

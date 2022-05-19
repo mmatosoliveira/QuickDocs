@@ -12,12 +12,17 @@ namespace QuickDocs
         private readonly object _lockObject = new();
         private readonly string _path = Path.Combine(Directory.GetCurrentDirectory(), "quickdoc.json");
 
-        public List<ItemDoc> GetDocs()
+        public List<ItemDoc> GetDocs(string query = null)
         {
             lock (_lockObject)
             {
                 var json = File.ReadAllText(_path, Encoding.UTF8);
                 var dados = JsonConvert.DeserializeObject<List<ItemDoc>>(json);
+                if (!string.IsNullOrWhiteSpace(query))
+                {
+                    query = query.ToLowerInvariant();
+                    dados = dados.Where(x => x.Nome.ToLowerInvariant().Contains(query) || x.Categoria.ToLowerInvariant().Contains(query) || x.Tags.Any(y => y.ToLowerInvariant().Contains(query))).ToList();
+                }
                 return dados;
             }
         }

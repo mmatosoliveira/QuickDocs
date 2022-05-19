@@ -4,14 +4,14 @@
     <mat-nav-list *ngFor="let item of categoriasAgrupadas" class="crescer-componente">
       <button mat-list-item (click)="categoriaSelecionada = item.categoria; docsCategoriaSelecionada = item.itens;">
         <mat-icon *ngIf="categoriaSelecionada == item.categoria" style="margin-right: 10px">visibility</mat-icon>
-        <p class="descricao-categoria">{{ item.categoria }}</p>
+        <p [text-highlight]="searchedValue" customClasses="descricao-categoria" class="descricao-categoria" [innerHtml]="item.categoria"></p>
       </button>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="container" fxLayout="row wrap" fxLayoutAlign="space-around stretch">
       <div *ngFor="let item of docsCategoriaSelecionada">
-        <app-card-item-doc [doc]="item"></app-card-item-doc>
+        <app-card-item-doc [doc]="item" [searchedValue]="searchedValue"></app-card-item-doc>
       </div>
     </div>
   </mat-sidenav-content>
