@@ -8,9 +8,9 @@
       </button>
       <span fxFlexAlign="center">Quick Docs</span>
       <mat-form-field appearance="standard" *ngIf="showSearchInput" style="margin-left: 25px;" fxFlexAlign="center" fxFlex>
-        <input type="text" (keyup.enter)="onSearch.emit(searchedValue)" [(ngModel)]="searchedValue" matInput placeholder="Pesquisar por categoria, nome ou tags" style="height: 30px;" #filter/>
+        <input type="text" (keyup.enter)="onSearch.emit(searchedValue)" (input)="onInputEvent()" [(ngModel)]="searchedValue" matInput placeholder="Pesquisar por categoria, nome ou tags" style="height: 30px;" #filter/>
       </mat-form-field>
-      <button mat-icon-button (click)="showSearchInput = !showSearchInput;" fxFlexAlign="center">
+      <button mat-icon-button (click)="this.showSearchInput = !this.showSearchInput;" fxFlexAlign="center">
         <mat-icon>search</mat-icon>
       </button>
     </div>

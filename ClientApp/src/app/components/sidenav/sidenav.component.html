@@ -9,6 +9,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
+    <mat-progress-bar *ngIf="searching" [mode]="progressMode" [value]="progressValue" color="accent"></mat-progress-bar>
     <div class="container" fxLayout="row wrap" fxLayoutAlign="space-around stretch">
       <div *ngFor="let item of docsCategoriaSelecionada">
         <app-card-item-doc [doc]="item" [searchedValue]="searchedValue"></app-card-item-doc>

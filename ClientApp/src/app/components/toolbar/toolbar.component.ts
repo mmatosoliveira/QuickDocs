@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AfterViewChecked, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
@@ -29,6 +29,9 @@ export class ToolbarComponent implements OnInit {
   @Output()
   onSearch : EventEmitter<string> = new EventEmitter<string>();
 
+  @ViewChild('filter')
+  filter : any;
+
   constructor(
     private localStorage : LocalStorageService,
     public dialog: MatDialog
@@ -37,6 +40,11 @@ export class ToolbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterContentChecked() : void{
+    if(this.filter)
+      this.filter.nativeElement.focus();
   }
 
   toggleTheme(): void {
@@ -54,5 +62,10 @@ export class ToolbarComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.onCloseDocsSettings.emit();
     });
+  }
+
+  onInputEvent(){
+    if(this.searchedValue.length === 0)
+      this.onSearch.emit(this.searchedValue);
   }
 }

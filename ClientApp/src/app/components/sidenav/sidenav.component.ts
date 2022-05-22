@@ -1,10 +1,14 @@
-import { ItemDoc } from './../../models/item-doc.model';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Observable, take } from 'rxjs';
+import {  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { catchError, of, take } from 'rxjs';
+import { ItemDocPorCategoria } from 'src/app/models/item-doc-por-categoria.model';
 import { BuscadorItensDocsService } from 'src/app/services/buscador-itens-docs.service';
 import { GroupService } from 'src/app/services/group.service';
-import { ItemDocPorCategoria } from 'src/app/models/item-doc-por-categoria.model';
+
+import { ItemDoc } from './../../models/item-doc.model';
 
 @Component({
   selector: 'app-sidenav',
@@ -16,13 +20,21 @@ export class SidenavComponent implements OnInit, OnChanges {
   docsCategoriaSelecionada : ItemDoc[] = [];
   categoriasAgrupadas : ItemDocPorCategoria[] = [];
   categoriaSelecionada : string = '';
+  searching : boolean = false;
+  progressMode : 'determinate' | 'indeterminate' = 'determinate';
+  progressValue = 100;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   @Input()
   searchedValue : string = '';
 
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
-  constructor(private buscador: BuscadorItensDocsService) {}
+  constructor(
+    private buscador: BuscadorItensDocsService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
   }
@@ -34,8 +46,19 @@ export class SidenavComponent implements OnInit, OnChanges {
   }
 
   processarDados(){
+    this.searching = true;
+    this.progressMode = 'indeterminate';
     this.buscador.obterDadosDocs(this.searchedValue)
-    .pipe(take(1))
+    .pipe(
+      take(1),
+      catchError(erro => {
+        this._snackBar.open('Ocorreu um erro ao buscar os dados de documentações', 'Ok', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        return of([]);
+      })
+    )
     .subscribe(dados => {
       this.categoriasAgrupadas = [];
       var dadosAgrupados = GroupService.groupBy(dados, x => x.categoria);
@@ -49,6 +72,11 @@ export class SidenavComponent implements OnInit, OnChanges {
         this.categoriaSelecionada = categoria?.categoria;
         this.docsCategoriaSelecionada = categoria?.itens;
       }
+      else{
+        this.categoriasAgrupadas = [];
+        this.docsCategoriaSelecionada = [];
+      }
+      this.searching = false;
     });
   }
 
